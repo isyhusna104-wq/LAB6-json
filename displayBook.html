@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Search</title>
-</head>
-<body>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; }
         .book-card { margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; width: 300px; background: #f9f9f9; }
@@ -19,55 +17,54 @@
         <option value="">--Select a Book--</option>
     </select>
 
-    <div class="book-card" id="bookDetails" >
+    <div class="book-card" id="bookDetails" style="display:none;">
         <h3 id="displayTitle"></h3>
-        <p><strong>Author:</strong></p> <span id="displayAuthor"></span></p>
-        <p><strong>Publication Year:</strong></p> <span id="displayYear"></span></p>
-        <p><strong>Genre:</strong></p> <span id="displayGenre"></span></p>
+        <p><strong>Author:</strong> <span id="displayAuthor"></span></p>
+        <p><strong>Publication Year:</strong> <span id="displayYear"></span></p>
+        <p><strong>Genre:</strong> <span id="displayGenre"></span></p>
     </div>
 
     <script>
         const jsonUrl = 'https://raw.githubusercontent.com/isyhusna104-wq/LAB06-JSON/refs/heads/main/books.json';
-        let globalBooks =[]; 
+        let globalBooks = []; 
 
         async function loadBooks(){ 
             try {
                 const response = await fetch(jsonUrl); 
-                const data= await response.json();
+                const data = await response.json();
                 globalBooks = data.books; 
 
                 const selectElement = document.getElementById('bookSelect'); 
 
                 globalBooks.forEach(book => {
-                    const option = document.createElement ('option');
-                    option.value= book.title; 
+                    const option = document.createElement('option');
+                    option.value = book.title; 
                     option.textContent = book.title; 
                     selectElement.appendChild(option);
-
                 });
-            
-            }catch (error){
-                console.error ('Error fetching JSON data:',error); 
+            } catch (error) {
+                console.error('Error fetching JSON data:', error); 
             }
         }
 
-        documen.getElementById('bookSelect').addEventListener('change', function(event){
+        document.getElementById('bookSelect').addEventListener('change', function(event){
             const selectedTitle = event.target.value;
             const detailsCard = document.getElementById('bookDetails'); 
 
             if (!selectedTitle){
-                detailsCard.display = 'none';
+                detailsCard.style.display = 'none'; 
                 return; 
             }
 
-            const matchedBook = globalBooks.find (b =>b.title === selectedTitle);
+            const matchedBook = globalBooks.find(b => b.title === selectedTitle);
 
             if (matchedBook){
                 document.getElementById('displayTitle').textContent = matchedBook.title; 
                 document.getElementById('displayAuthor').textContent = matchedBook.author; 
-                document.getElementById('displayYear').textContent = matchedBook.year; 
-                document.getElementById('displayGenre').textContent = matchedBook.genre; 
+                document.getElementById('displayYear').textContent = matchedBook.publicationYear; 
+                document.getElementById('displayGenre').textContent = matchedBook.genres.join(', '); 
 
+                detailsCard.style.display = 'block';
             }
         }); 
 
