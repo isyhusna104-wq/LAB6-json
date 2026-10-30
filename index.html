@@ -5,10 +5,10 @@
     <title>Lab 06 - Q2 Console Output</title>
 </head>
 <body>
-    <h2>Check your Browser Console (F12 or Inspect -> Console)</h2>
+    <h2>press F2 to check</h2>
 
     <script>
-        // Inline JSON data representing the collection
+        
         const libraryData = {
           "books": [
             {
@@ -26,13 +26,10 @@
           ]
         };
 
-        // 1. The title of the first book
         console.log("Title of the first book:", libraryData.books[0].title);
 
-        // 2. The author of the second book
         console.log("Author of the second book:", libraryData.books[1].author);
 
-        // 3. The genres of all books
         console.log("Genres of all books:");
         libraryData.books.forEach((book, index) => {
             console.log(`- Book ${index + 1} (${book.title}):`, book.genres.join(", "));
